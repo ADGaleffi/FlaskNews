@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>{% block title %}Flask News{% endblock %}</title>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <title>Collapsible Fieldset</title>
+  <style>
+      
+      .collapsible-fieldset {
+          border: 1px solid #ccc;
+          padding: 10px;
+          margin-bottom: 10px;
+      }
+
+      
+      .collapsible-button {
+          cursor: pointer;
+          background-color: #f1f1f1;
+          padding: 5px 10px;
+          border: 1px solid #ccc;
+          text-align: left;
+      }
+
+      
+      .collapsible-content {
+          display: none;
+      }
+  </style>
+</head>
+<body>
+    {% block content %}{% endblock %}
+</body>
+</html>

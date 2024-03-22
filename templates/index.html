@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Latest News</h1>
+    <div class="collapsible-fieldset">
+      <div class="collapsible-button" onclick="toggleCollapsible()">Customize Your News Feed</div>
+      <div class="collapsible-content">
+        <form id="filterNews" method="get" action="/news">
+          <fieldset>
+            <legend>Exclude Sources:</legend>
+            <label><input type="checkbox" name="exclude_source" id="exclude_source" value="cbs-news"> CBS News</label>
+            <label><input type="checkbox" name="exclude_source" id="exclude_source" value="bbc-news"> BBC News</label>
+            <label><input type="checkbox" name="exclude_source" id="exclude_source" value="espn"> ESPN</label>
+            <label><input type="checkbox" name="exclude_source" id="exclude_source" value="the-washington-post"> The Washington Post</label>
+
+          </fieldset>
+
+          <button type="submit" onclick="filterNews()">Filter</button>
+        </form>
+        
+        <form id="searchForm" method="get" action="/news">
+            <label for="searchInput">Exclude articles with this word in the title:</label>
+            <input type="text" id="searchInput" name="exclude_word" placeholder="Enter word">
+            <button type="submit" onclick="excludeWord()">Exclude</button>
+        </form>
+      </div>
+    </div>
+
+        
+    <div class="news-container">
+        {% for index in range(0, news_data|length, 3) %}
+            <div class="row">
+                {% for offset in range(3) %}
+                    {% set article_index = index + offset %}
+                    {% if article_index < news_data|length %}
+                        {% set article = news_data[article_index] %}
+                        <div class="news-item">
+                            <h2><a>{{ article.title }}</a></h2>
+                            {% if article.urlToImage %}
+                                <img src="{{ article.urlToImage }}" alt="{{ article.title }}" class="news-image">
+                            {% endif %}
+                           
+                            <a href="{{ article.url }}" target="_blank">Read more</a>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endfor %}
+    </div>
+
+    <script>
+        function filterNews() {
+            
+            $('#filterNews').submit();
+        }
+    </script>
+    <script>
+        function excludeWord() {
+
+            $('#excludeWord').submit();
+        }
+    </script>
+    <script>        
+        function toggleCollapsible() {
+            var collapsibleContent = document.querySelector('.collapsible-content');
+            collapsibleContent.style.display = (collapsibleContent.style.display === 'none') ? 'block' : 'none';
+        }
+    </script>
+{% endblock %}
